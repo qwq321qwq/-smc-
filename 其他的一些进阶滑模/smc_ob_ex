@@ -1,0 +1,24 @@
+滑膜观测器(sliding mode observer)简单说明。以机械臂系统广义力矩方程举例。
+
+tau = D * ddq + C * dq + G;
+D_dot = C' + C;
+p = D * dq;
+dp = dD * dq + D * ddq;
+
+dp = tau + C' * dq + G;
+从这里开始加的观测器：
+
+dp_hat = tau + C' * dq + G - T1 * |p_hat - p| ^ 1/2 * sgn(p_hat - p) - T2 * (p_hat - p) + rou;
+drou = -S1 * sgn(p_hat - p) - S2 * (p_hat - p);
+
+到此为止了。
+
+稳定性证明：
+上边其实说的不太清楚，因为首先基础滑膜观测器比较简单，不用说太多，而且一般都关注最后控制器形式，稳定性一般不会出错。
+
+S = p_hat - p;
+dS = dp_hat - dp;
+V = 1/2 * S' * S;
+dV = dS * S;
+
+但所以说S还是有些说法的。
